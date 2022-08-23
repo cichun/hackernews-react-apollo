@@ -4,6 +4,7 @@ import {Route, Routes} from "react-router-dom";
 import LinkList from "./LinkList";
 import CreateLink from "./CreateLink";
 import Login from "./Login";
+import Search from "./Search";
 
 class App extends Component {
     render() {
@@ -14,7 +15,8 @@ class App extends Component {
                     <Routes>
                         <Route path={"/"} element={<LinkList/>}/>
                         <Route path={"/create"} element={<CreateLink/>}/>
-                        <Route path={'/login'} element={<Login/>}/>
+                        <Route path={"/login"} element={<Login/>}/>
+                        <Route path={"/search"} element={<Search/>}/>
                     </Routes>
                 </div>
             </div>

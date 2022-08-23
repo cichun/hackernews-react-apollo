@@ -4,25 +4,24 @@ import {timeDifferenceForDate} from "../utils";
 import {gql, useMutation} from "@apollo/client";
 import {FEED_QUERY} from "./LinkList";
 
-
 const VOTE_MUTATION = gql`
-    mutation VoteMutation($linkId: ID!) {
-        vote(linkId:$linkId) {
+  mutation VoteMutation($linkId: ID!) {
+    vote(linkId: $linkId) {
+      id
+      link {
+        id
+        votes {
+          id
+          user {
             id
-            link{
-                id
-                votes{
-                    id
-                    user{
-                        id
-                    }
-                }
-            }
-            user{
-                id
-            }
+          }
         }
+      }
+      user {
+        id
+      }
     }
+  }
 `;
 
 
@@ -35,7 +34,7 @@ export default function Link(props) {
             linkId: link.id
         },
         update: (cache, {data: {vote}}) => {
-            const { feed } = cache.readQuery({
+            const {feed} = cache.readQuery({
                 query: FEED_QUERY
             });
 
