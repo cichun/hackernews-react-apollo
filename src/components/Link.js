@@ -1,5 +1,5 @@
 import React from "react";
-import {AUTH_TOKEN} from "../constants";
+import {AUTH_TOKEN, LINKS_PER_PAGE} from "../constants";
 import {timeDifferenceForDate} from "../utils";
 import {gql, useMutation} from "@apollo/client";
 import {FEED_QUERY} from "./LinkList";
@@ -34,8 +34,15 @@ export default function Link(props) {
             linkId: link.id
         },
         update: (cache, {data: {vote}}) => {
+            const take = LINKS_PER_PAGE;
+            const skip = 0;
+            const orderBy = {createdAt: 'desc'};
+
             const {feed} = cache.readQuery({
-                query: FEED_QUERY
+                query: FEED_QUERY,
+                variables: {
+                    take, skip, orderBy
+                }
             });
 
             const updatedLinks = feed.links.map((feedLink) => {
@@ -54,6 +61,9 @@ export default function Link(props) {
                     feed: {
                         links: updatedLinks
                     }
+                },
+                variables: {
+                    take, skip, orderBy
                 }
             });
         }
